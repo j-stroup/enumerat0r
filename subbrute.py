@@ -42,7 +42,7 @@ def scan(target):
                 response = str(r)
                 response = response.strip('<Response []>')
                 item_response = response + ' | ' + item
-                sys.stdout.write('                                                                      \r')
+                sys.stdout.write('                                                                  \r')
                 sys.stdout.write(item_response + '\r')
                 sys.stdout.flush()
                 # Log subdomains
@@ -51,10 +51,10 @@ def scan(target):
                     output.close()
             except:
                 error = 'Error | ' + item
-                sys.stdout.write('                                                                      \r')
+                sys.stdout.write('                                                                  \r')
                 sys.stdout.write(error + '\r')
                 sys.stdout.flush()
-        sys.stdout.write('                                                                              \r')
+        sys.stdout.write('                                                                          \r')
         sys.stdout.write('Complete')
         sys.stdout.flush()
         print('\n')
