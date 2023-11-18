@@ -63,5 +63,5 @@ def scan(target):
 
 
 if __name__ == "__main__":
-    target = input('Domain: https://')
+    target = input('Target domain: https://')
     scan(target)
