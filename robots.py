@@ -2,7 +2,7 @@ import requests
 import os
 
 
-target = input('Target domain: ')
+target = input('Target domain: https://')
 
 if not os.path.exists(target):
     os.makedirs(target)
