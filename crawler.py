@@ -19,7 +19,7 @@ def list_js_files(target, js_file):
     if js_file not in js_files:
         js_files.append(js_file)
         path = target.strip('https://')
-        path = f'{path}/java_script'
+        path = f'{path}'
         if not os.path.exists(path):
             os.makedirs(path)
         with open(os.path.join(path, 'js_files.txt'), 'a') as f:
