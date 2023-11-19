@@ -12,21 +12,22 @@ logging.basicConfig(
 
 urls_to_visit = []
 visited_urls = []
-known_folders = []
+js_files = []
 
 # Log JavaScript file locations
-def js_folders(folder):
-    if folder not in known_folders:
-        known_folders.append(folder)
-        path = 'scan_results/java_script'
+def list_js_files(target, js_file):
+    if js_file not in js_files:
+        js_files.append(js_file)
+        path = target.strip('https://')
+        path = f'{path}/java_script'
         if not os.path.exists(path):
             os.makedirs(path)
-        with open(os.path.join(path, 'js_locations.txt'), 'a') as f:
-            f.write(f'\n{folder}/')
+        with open(os.path.join(path, 'js_files.txt'), 'a') as f:
+            f.write(f'\n{js_file}')
             f.close()
 
 # Parse HTML
-def get_linked_urls(url, html):
+def get_linked_urls(target, url, html):
     soup = BeautifulSoup(html, 'html.parser')
 
     # Find linked urls
@@ -40,31 +41,24 @@ def get_linked_urls(url, html):
     for file in soup.find_all('script'):
         path = file.get('src')
         if path and path.endswith('.js'):
-            print(path)
-            time.sleep(4)
             if path.startswith('/'):
                 path = urljoin(url, path)
-            js_url = url.split('/')
-            js_url.pop(-1)
-            f = '/'.join(js_url)
-            print(f)
-            time.sleep(4)
-            js_folders(f)
+            list_js_files(target, path)
 
 # Add discovered url to list if not already crawled
-def add_url_to_visit(target_domain, url):
-    if str(target_domain) not in str(url):
+def add_url_to_visit(target, url):
+    if str(target) not in str(url):
         pass
     elif url not in visited_urls and url not in urls_to_visit:
         urls_to_visit.append(url)
 
-def crawl(target_domain, url):
+def crawl(target, url):
     html = requests.get(url).text
-    for url in get_linked_urls(url, html):
-        add_url_to_visit(target_domain, url)
+    for url in get_linked_urls(target, url, html):
+        add_url_to_visit(target, url)
 
 # Main function
-def run(target_domain, file, speed):
+def run(target, file, speed):
     if speed == 's':
         speed = 3
     elif speed == 'm':
@@ -75,12 +69,12 @@ def run(target_domain, file, speed):
         url = urls_to_visit.pop(0)
         logging.info(f'Crawling: {url}')
         try:
-            crawl(target_domain, url)
+            crawl(target, url)
         except Exception:
             logging.exception(f'Failed to crawl: {url}')
         finally:
             visited_urls.append(url)
-            path = 'scan_results'
+            path = target.strip('https://')
             if not os.path.exists(path):
                 os.makedirs(path)
             with open(os.path.join(path, file), 'a') as f:
@@ -89,16 +83,16 @@ def run(target_domain, file, speed):
             time.sleep(speed)
 
 # Select target
-def start(target_domain, speed):
-    urls_to_visit.append(target_domain)
-    file = target_domain.replace('https://', '')
-    file = file.replace('.', '_') + '.txt'
-    run(target_domain, file, speed)
+def start(target, speed):
+    target = 'https://' + target
+    urls_to_visit.append(target)
+    file = target.replace('https://', '')
+    file = file + '_endpoints.txt'
+    run(target, file, speed)
 
 
 if __name__ == '__main__':
-    global target_domain
-    target_domain = input('Domain: https://')
-    target_domain = 'https://' + target_domain
+    global target
+    target = input('Domain: https://')
     speed = input('How fast? S_low/M_edium/F_ast: ').lower()
-    start(target_domain, speed)
+    start(target, speed)

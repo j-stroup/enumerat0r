@@ -2,6 +2,16 @@ import requests
 import os
 
 
+def check_for_list(target):
+    path = f'{target}/{target}_subs.txt'
+    if not os.path.exists(path):
+        get_robots(target)
+    else:
+        with open(path, 'r') as f:
+            Lines = [line for line in f.readlines() if line.strip()]
+            for line in Lines:
+                get_robots(line)
+
 def get_robots(target):
     print(f'Checking for {target}/robots.txt')
 
@@ -40,4 +50,4 @@ def get_robots(target):
 
 if __name__ == "__main__":
     target = input('Target domain: https://')
-    get_robots(target)
+    check_for_list(target)

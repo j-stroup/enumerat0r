@@ -5,9 +5,7 @@ import sys
 import os
 
 
-def scan(target):
-    speed = input('How fast? S_low/M_edium/F_ast: ').lower()
-    list_length = input('Use S_hort/M_edium/L_ong list: ').lower()
+def scan(target, speed, list_length):
     print('\n')
     if speed == 's':
         speed = [2,3,4]
@@ -64,4 +62,6 @@ def scan(target):
 
 if __name__ == "__main__":
     target = input('Target domain: https://')
-    scan(target)
+    speed = input('How fast? S_low/M_edium/F_ast: ').lower()
+    list_length = input('Use S_hort/M_edium/L_ong list: ').lower()
+    scan(target, speed, list_length)
