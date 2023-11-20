@@ -1,5 +1,8 @@
 import requests
 import os
+import random
+
+from user_agents import agents
 
 
 def check_for_list(target):
@@ -15,9 +18,10 @@ def check_for_list(target):
 def get_robots(target):
     print(f'Checking for {target}/robots.txt')
 
+    agent = random.choice(agents)
     headers = {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
-              }
+            'User-Agent': agent
+            }
 
     url = f'https://{target}/robots.txt'
 
@@ -45,7 +49,7 @@ def get_robots(target):
                     output.write(f'\n{line}')
                     output.close()
 
-    print('Finished')
+    print(f'{target} Finished')
 
 
 if __name__ == "__main__":

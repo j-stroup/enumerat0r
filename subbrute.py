@@ -4,6 +4,8 @@ import random
 import sys
 import os
 
+from user_agents import agents
+
 
 def scan(target, speed, list_length):
     print('\n')
@@ -22,9 +24,7 @@ def scan(target, speed, list_length):
     elif list_length == 't':
         sub_list = 'lists/test.txt'
     output_file = target + '_subs.txt'
-    headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
-            }
+
     with open(sub_list, 'r', encoding="utf-8") as file:
         print('Sit back and relax. This will take some time.\n')
         path = target
@@ -36,6 +36,10 @@ def scan(target, speed, list_length):
             item = item.strip()
             item = 'https://' + item + '.' + target
             try:
+                agent = random.choice(agents)
+                headers = {
+                        'User-Agent': agent
+                        }
                 r = requests.get(item, headers=headers)
                 response = str(r)
                 response = response.strip('<Response []>')
