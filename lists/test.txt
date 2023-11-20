@@ -1,3 +1,4 @@
+www
 mail
 ftp
 localhost
@@ -16,22 +17,3 @@ test
 m
 blog
 dev
-www2
-ns3
-pop3
-forum
-admin
-mail2
-vpn
-mx
-imap
-old
-new
-mobile
-mysql
-beta
-support
-cp
-secure
-shop
-demo

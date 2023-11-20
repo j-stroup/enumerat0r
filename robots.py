@@ -13,19 +13,25 @@ def check_for_list(target):
         with open(path, 'r') as f:
             Lines = [line for line in f.readlines() if line.strip()]
             for line in Lines:
-                get_robots(line)
+                if line != '':
+                    url = line.strip()
+                    get_robots(target, url)
 
-def get_robots(target):
-    print(f'Checking for {target}/robots.txt')
+def get_robots(target, url):
+    print(f'Checking for {url}/robots.txt')
 
     agent = random.choice(agents)
     headers = {
             'User-Agent': agent
             }
 
-    url = f'https://{target}/robots.txt'
-
-    r = requests.get(url, headers=headers)
+    robot = f'{url}/robots.txt'
+    print(robot)
+    try:
+        r = requests.get(robot, headers=headers)
+    except:
+        print(f'Error: Could not get {url}/robots.txt')
+        r = 'error'
 
     if str(r) == '<Response [200]>':
         # Create directory and text file to hold list of endpoints
@@ -38,13 +44,13 @@ def get_robots(target):
         for line in r.text.splitlines():
             if line.startswith('Allow'):
                 line = line.strip('Allow: ')
-                line = f'https://{target}{line}'
+                line = f'{url}{line}'
                 with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
                     output.write(f'\n{line}')
                     output.close()
             elif line.startswith('Disallow'):
                 line = line.strip('Disallow: ')
-                line = f'https://{target}{line}'
+                line = f'{url}{line}'
                 with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
                     output.write(f'\n{line}')
                     output.close()
@@ -54,4 +60,5 @@ def get_robots(target):
 
 if __name__ == "__main__":
     target = input('Target domain: https://')
-    check_for_list(target)
+    url = f'https://{target}'
+    get_robots(target, url)
