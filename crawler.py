@@ -12,45 +12,17 @@ logging.basicConfig(
 
 urls_to_visit = []
 visited_urls = []
-js_files = []
-
-
-def check_for_list(target, speed):
-    path = f'{target}/{target}_subs.txt'
-    if not os.path.exists(path):
-        start(target, speed)
-    else:
-        with open(path, 'r') as f:
-            Lines = [line for line in f.readlines()]
-            for line in Lines:
-                if line != '':
-                    add_url_to_visit(target, line)
-
-    # Check for robots file
-    path = f'{target}/{target}_robots.txt'
-    if not os.path.exists(path):
-        start(target, speed)
-    else:
-        with open(path, 'r') as f:
-            Lines = [line for line in f.readlines()]
-            for line in Lines:
-                if line != '':
-                    if str('*') in str(line):
-                        pass
-                    else:
-                        add_url_to_visit(target, line)
-    start(target, speed)
+known_jsfiles = []
 
 # Log JavaScript file locations
-def list_js_files(target, js_file):
-    if js_file not in js_files:
-        js_files.append(js_file)
-        path = target.strip('https://')
-        path = f'{path}'
-        if not os.path.exists(path):
-            os.makedirs(path)
-        with open(os.path.join(path, 'js_files.txt'), 'a') as f:
-            f.write(f'\n{js_file}')
+def js_files(target, jsfile):
+    if jsfile not in known_jsfiles:
+        logging.info(f'FOUND: {jsfile})
+        known_jsfiles.append(jsfile)
+        file = f'{target}_jsfiles.txt'
+        path = f'{target}/{file}'
+        with open(path, 'a') as f:
+            f.write(f'\n{jsfile}')
             f.close()
 
 # Parse HTML
@@ -70,7 +42,7 @@ def get_linked_urls(target, url, html):
         if path and path.endswith('.js'):
             if path.startswith('/'):
                 path = urljoin(url, path)
-            list_js_files(target, path)
+            js_files(target, path)
 
 # Add discovered url to list if not already crawled
 def add_url_to_visit(target, url):
@@ -85,7 +57,7 @@ def crawl(target, url):
         add_url_to_visit(target, url)
 
 # Main function
-def run(target, file, speed):
+def run(target, target_url, file, speed):
     if speed == 's':
         speed = 3
     elif speed == 'm':
@@ -101,25 +73,24 @@ def run(target, file, speed):
             logging.exception(f'Failed to crawl: {url}')
         finally:
             visited_urls.append(url)
-            path = target.replace('https://', '')
+            path = target + '/'
             if not os.path.exists(path):
                 os.makedirs(path)
             with open(os.path.join(path, file), 'a') as f:
-                f.write(url)
+                f.write(f'\n{url}')
                 f.close()
             time.sleep(speed)
 
 # Select target
-def start(target, speed):
-    target = 'https://' + target
-    urls_to_visit.append(target)
-    file = target.replace('https://', '')
-    file = file + '_endpoints.txt'
-    run(target, file, speed)
+def start(target, target_url, speed):
+    urls_to_visit.append(target_url)
+    file = target + '_enpoints.txt'
+    run(target, target_url, file, speed)
 
 
 if __name__ == '__main__':
-    global target
+    global target_domain
     target = input('Domain: https://')
+    target_domain = 'https://' + target
     speed = input('How fast? S_low/M_edium/F_ast: ').lower()
-    check_for_list(target, speed)
+    start(target, target_domain, speed)

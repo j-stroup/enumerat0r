@@ -24,35 +24,16 @@ def main():
 
     subs = f'{target}/{target}_subs.txt'
     bots = f'{target}/{target}_robots.txt'
-    master = f'{target}/{target}_master.txt'
 
-    # Add all subdomains to master list of URLs to be crawled
-    if os.path.exists(subs):
-        with open(subs, 'r') as f:
-            Lines = [line for line in f.readlines() if line.strip()]
-            for line in Lines:
-                if line not in master_list:
-                    master_list.append(line)
-            f.close()
-
-    # Add all endpoints discovered in robots.txt to master list of URLs to be crawled
-    if os.path.exists(bots):
-        with open(bots, 'r') as f:
-            Lines = [line for line in f.readlines() if line.strip()]
-            for line in Lines:
-                if line not in master_list:
-                    master_list.append(line)
-            f.close()
 
     # Combine lists and write to new file
-    with open(master, 'a') as f:
-        for item in master_list:
-            item.strip()
-            f.write(item)
-        f.close()
-
-    # Start crawler
-    crawler.check_for_list(target, speed)
+    with open(subs, 'r') as f:
+        Lines = [line for line in f.readlines() if line.strip()]
+        for line in Lines:
+            if line != '':
+                target_url = line.strip()
+                # Start crawler
+                crawler.start(target, target_url, speed)
 
 
 if __name__ == "__main__":
