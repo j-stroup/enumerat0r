@@ -16,16 +16,30 @@ js_files = []
 
 
 def check_for_list(target, speed):
-    path = f'{target}/{target}_master.txt'
+    path = f'{target}/{target}_subs.txt'
     if not os.path.exists(path):
         start(target, speed)
     else:
         with open(path, 'r') as f:
-            Lines = [line for line in f.readlines() if line.strip()]
+            Lines = [line for line in f.readlines()]
             for line in Lines:
                 if line != '':
-                    urls_to_visit.append(line)
+                    add_url_to_visit(target, line)
+
+    # Check for robots file
+    path = f'{target}/{target}_robots.txt'
+    if not os.path.exists(path):
         start(target, speed)
+    else:
+        with open(path, 'r') as f:
+            Lines = [line for line in f.readlines()]
+            for line in Lines:
+                if line != '':
+                    if str('*') in str(line):
+                        pass
+                    else:
+                        add_url_to_visit(target, line)
+    start(target, speed)
 
 # Log JavaScript file locations
 def list_js_files(target, js_file):
@@ -87,11 +101,11 @@ def run(target, file, speed):
             logging.exception(f'Failed to crawl: {url}')
         finally:
             visited_urls.append(url)
-            path = target.strip('https://')
+            path = target.replace('https://', '')
             if not os.path.exists(path):
                 os.makedirs(path)
             with open(os.path.join(path, file), 'a') as f:
-                f.write(f'\n{url}')
+                f.write(url)
                 f.close()
             time.sleep(speed)
 
@@ -108,4 +122,4 @@ if __name__ == '__main__':
     global target
     target = input('Domain: https://')
     speed = input('How fast? S_low/M_edium/F_ast: ').lower()
-    start(target, speed)
+    check_for_list(target, speed)

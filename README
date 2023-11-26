@@ -12,6 +12,5 @@ crawling the target for all discoverable endpoints.
 
 Eventually I'd like to tie all of the tools together
 and display the resulting endpoints as a webpage. I
-also want to randomize the User-Agent in the header
-or offer a customized headers option for bug bounty
-programs that require it. 
+also want to offer a customized headers option for
+bug bounty programs that require it. 

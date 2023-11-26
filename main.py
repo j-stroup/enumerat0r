@@ -47,7 +47,8 @@ def main():
     # Combine lists and write to new file
     with open(master, 'a') as f:
         for item in master_list:
-            f.write(f'{item}')
+            item.strip()
+            f.write(item)
         f.close()
 
     # Start crawler

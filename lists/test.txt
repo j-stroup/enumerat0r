@@ -7,13 +7,6 @@ smtp
 webdisk
 pop
 cpanel
-whm
-ns1
-ns2
-autodiscover
-autoconfig
-ns
-test
 m
 blog
 dev
