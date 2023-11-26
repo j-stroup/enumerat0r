@@ -1,9 +1,12 @@
 import logging
 from urllib.parse import urljoin
 import requests
+import random
 from bs4 import BeautifulSoup
 import time
 import os
+
+from user_agents import agents
 
 
 logging.basicConfig(
@@ -17,7 +20,7 @@ known_jsfiles = []
 # Log JavaScript file locations
 def js_files(target, jsfile):
     if jsfile not in known_jsfiles:
-        logging.info(f'FOUND: {jsfile})
+        logging.info(f'FOUND: {jsfile}')
         known_jsfiles.append(jsfile)
         file = f'{target}_jsfiles.txt'
         path = f'{target}/{file}'
@@ -52,7 +55,11 @@ def add_url_to_visit(target, url):
         urls_to_visit.append(url)
 
 def crawl(target, url):
-    html = requests.get(url).text
+    agent = random.choice(agents)
+    headers = {
+            'User-Agent': agent
+            }
+    html = requests.get(url, headers=headers).text
     for url in get_linked_urls(target, url, html):
         add_url_to_visit(target, url)
 
