@@ -1,6 +1,6 @@
-***
-
 Target enumeration tool for bug bounties and pentests.
+
+***
 
 The idea is to build multiple tools which can function
 independently or concurrently from main.py. Each tool
@@ -13,4 +13,15 @@ crawling the target for all discoverable endpoints.
 Eventually I'd like to tie all of the tools together
 and display the resulting endpoints as a webpage. I
 also want to offer a customized headers option for
-bug bounty programs that require it. 
+bug bounty programs that require it.
+
+***
+
+To-do:
+  Only log endpoints not already logged
+  Add robots results to crawler
+  Select tools to run from main.py
+  Additional fuzzing for common directories and php/txt files
+  Make list of URLs with parameters
+  Convert all results into webpage
+  Parse js files for goodies

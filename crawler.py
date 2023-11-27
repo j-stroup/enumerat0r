@@ -91,7 +91,7 @@ def run(target, target_url, file, speed):
 # Select target
 def start(target, target_url, speed):
     urls_to_visit.append(target_url)
-    file = target + '_enpoints.txt'
+    file = target + '_endpoints.txt'
     run(target, target_url, file, speed)
 
 
