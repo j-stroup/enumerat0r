@@ -1,0 +1,2 @@
+-Limit JS results to in scope
+-Scan JS after find

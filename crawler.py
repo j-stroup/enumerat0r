@@ -5,6 +5,7 @@ import random
 from bs4 import BeautifulSoup
 import time
 import os
+import js
 
 from user_agents import agents
 
@@ -22,7 +23,8 @@ def js_files(target, jsfile):
     if jsfile not in known_jsfiles:
         logging.info(f'FOUND: {jsfile}')
         known_jsfiles.append(jsfile)
-        file = f'{target}_jsfiles.txt'
+        js.scan_js(jsfile)
+        file = f'{target}_js-files.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
             f.write(f'\n{jsfile}')
