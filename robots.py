@@ -8,7 +8,8 @@ from user_agents import agents
 def check_for_list(target):
     path = f'{target}/{target}_subs.txt'
     if not os.path.exists(path):
-        get_robots(target)
+        target = ''
+        get_robots(target, url)
     else:
         with open(path, 'r') as f:
             Lines = [line for line in f.readlines() if line.strip()]

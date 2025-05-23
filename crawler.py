@@ -53,6 +53,7 @@ def get_linked_urls(target, url, html):
 
 # Add discovered url to list if not already crawled
 def add_url_to_visit(target, url):
+    target = f'.{target}'
     if str(target) not in str(url):
         pass
     elif url not in visited_urls and url not in urls_to_visit:

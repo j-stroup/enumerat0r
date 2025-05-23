@@ -3,6 +3,7 @@ import requests
 import sys
 from urllib.parse import urlparse
 import os
+import crawler
 
 
 # === Regex Patterns ===
@@ -18,9 +19,9 @@ def scan_js(target, js_content):
     found_credentials = credential_regex.findall(js_content)
 
     for url in sorted(found_urls):
+        crawler.add_url_to_visit(target, url)
         print("\n[+] Discovered URLs:")
-        # Add found URL to crawl list
-        print("   -", url)
+        print("   -", url, "\n")
 
     for key in found_api_keys:
         print("\n[+] Possible API Keys:")
@@ -29,7 +30,7 @@ def scan_js(target, js_content):
         with open(path, 'a') as f:
             f.write(f'\n{js_content}   - {key[0]}: {key[1]}')
             f.close()
-        print(f"   - {key[0]}: {key[1]}")
+        print(f"\nAPI KEYS ({js_content})   - {key[0]}: {key[1]}\n")
 
     for cred in found_credentials:
         print("\n[+] Possible Credentials/Secrets:")
@@ -38,8 +39,18 @@ def scan_js(target, js_content):
         with open(path, 'a') as f:
             f.write(f'\n{js_content}   - {cred[0]}: {cred[1]}')
             f.close()
-        print(f"   - {cred[0]}: {cred[1]}")
+        print(f"\nCREDENTIALS ({js_content})  - {cred[0]}: {cred[1]}\n")
 
 
 if __name__ == '__main__':
     scan_js(js_content)
+
+
+
+
+
+"""
+Fix out of scope logging of js files.
+Are js files found in js files being scanned?
+Log none js file urls that are found in js files.
+"""
