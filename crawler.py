@@ -19,11 +19,13 @@ visited_urls = []
 known_jsfiles = []
 
 # Log JavaScript file locations
-def js_files(target, jsfile):
+def js_files(target, jsfile, url):
+    if str(target) not in str(url):
+        pass
     if jsfile not in known_jsfiles:
         logging.info(f'FOUND: {jsfile}')
         known_jsfiles.append(jsfile)
-        js.scan_js(jsfile)
+        js.scan_js(target, jsfile)
         file = f'{target}_js-files.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
@@ -47,7 +49,7 @@ def get_linked_urls(target, url, html):
         if path and path.endswith('.js'):
             if path.startswith('/'):
                 path = urljoin(url, path)
-            js_files(target, path)
+            js_files(target, path, url)
 
 # Add discovered url to list if not already crawled
 def add_url_to_visit(target, url):

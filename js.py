@@ -11,19 +11,19 @@ api_key_regex = re.compile(r"(?i)(api_key|apikey|api-key|x-api-key)[\"'\s:]*[=:\
 credential_regex = re.compile(r"(?i)(token|password|secret|access_token|auth)[\"'\s:]*[=:\s\"']+([A-Za-z0-9_\-]{8,})")
 
 
-def scan_js(js_content):
+def scan_js(target, js_content):
     """Scan JavaScript content for sensitive data"""
     found_urls = set(url_regex.findall(js_content))
     found_api_keys = api_key_regex.findall(js_content)
     found_credentials = credential_regex.findall(js_content)
 
-    print("\n[+] Discovered URLs:")
     for url in sorted(found_urls):
+        print("\n[+] Discovered URLs:")
         # Add found URL to crawl list
         print("   -", url)
 
-    print("\n[+] Possible API Keys:")
     for key in found_api_keys:
+        print("\n[+] Possible API Keys:")
         file = f'{target}_treasure.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
@@ -31,8 +31,8 @@ def scan_js(js_content):
             f.close()
         print(f"   - {key[0]}: {key[1]}")
 
-    print("\n[+] Possible Credentials/Secrets:")
     for cred in found_credentials:
+        print("\n[+] Possible Credentials/Secrets:")
         file = f'{target}_treasure.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
