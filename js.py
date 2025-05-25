@@ -11,6 +11,26 @@ url_regex = re.compile(r"https?://[^\s\"'<>]+")
 api_key_regex = re.compile(r"(?i)(api_key|apikey|api-key|x-api-key)[\"'\s:]*[=:\s\"']+([A-Za-z0-9_\-]{16,})")
 credential_regex = re.compile(r"(?i)(token|password|secret|access_token|auth)[\"'\s:]*[=:\s\"']+([A-Za-z0-9_\-]{8,})")
 
+def fetch_js_content(target, jsfile):
+    """Fetch JS content from URL or file"""
+    if jsfile.startswith("http://") or jsfile.startswith("https://"):
+        try:
+            response = requests.get(jsfile, timeout=10)
+            response.raise_for_status()
+            return response.text
+        except Exception as e:
+            print(f"[!] Failed to fetch {jsfile}: {e}")
+            return ""
+    elif os.path.isfile(jsfile):
+        try:
+            with open(jsfile, 'r', encoding='utf-8', errors='ignore') as f:
+                return f.read()
+        except Exception as e:
+            print(f"[!] Failed to read file {jsfile}: {e}")
+            return ""
+    else:
+        print("[!] Invalid input: must be a URL or a local file path.")
+        return ""
 
 def scan_js(target, jsfile):
     """Scan JavaScript content for sensitive data"""
