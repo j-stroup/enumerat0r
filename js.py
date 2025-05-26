@@ -70,7 +70,6 @@ if __name__ == '__main__':
 
 
 """
-Fix out of scope logging of js files.
 Are js files found in js files being scanned?
 Log none js file urls that are found in js files.
 """

@@ -1,2 +1,12 @@
--Limit JS results to in scope
--Scan JS after find
+-Stop from crawling 404
+-Create separate log for 300, 400, & 500 errors
+-Log .txt .md
+-Don't crawl images
+-Better robots.txt handling
+-strip www. to stop duplicates
+
+------------------------------
+
+-Start menu for single tool options
+-Wordpress fingerprinting
+  -Check for and scan common wordpress endpoints

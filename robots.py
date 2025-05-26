@@ -63,3 +63,11 @@ if __name__ == "__main__":
     target = input('Target domain: https://')
     url = f'https://{target}'
     get_robots(target, url)
+
+
+
+
+"""
+Check add formatting for robots urls like https://
+Remove *
+"""

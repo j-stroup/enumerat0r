@@ -20,17 +20,18 @@ known_jsfiles = []
 
 # Log JavaScript file locations
 def js_files(target, jsfile):
-    if str(target) not in str(jsfile):
-        pass
     if jsfile not in known_jsfiles:
-        logging.info(f'FOUND: {jsfile}')
-        known_jsfiles.append(jsfile)
-        js.scan_js(target, jsfile)
-        file = f'{target}_js-files.txt'
-        path = f'{target}/{file}'
-        with open(path, 'a') as f:
-            f.write(f'\n{jsfile}')
-            f.close()
+        if str(target) not in str(jsfile):
+            pass
+        else:
+            logging.info(f'FOUND: {jsfile}')
+            known_jsfiles.append(jsfile)
+            js.scan_js(target, jsfile)
+            file = f'{target}_js-files.txt'
+            path = f'{target}/{file}'
+            with open(path, 'a') as f:
+                f.write(f'\n{jsfile}')
+                f.close()
 
 # Parse HTML
 def get_linked_urls(target, url, html):
@@ -47,13 +48,23 @@ def get_linked_urls(target, url, html):
     for file in soup.find_all('script'):
         path = file.get('src')
         if path and path.endswith('.js'):
-            if path.startswith('/'):
+            jsfile = path
+            if jsfile.startswith('http'):
+                pass
+            else:
                 jsfile = urljoin(url, path)
             js_files(target, jsfile)
 
 # Add discovered url to list if not already crawled
 def add_url_to_visit(target, url):
-    target = f'.{target}'
+    # Check for email or phone links
+    if url and url.startswith('http'):
+        pass
+    else:
+        if url and url.startswith('/'):
+            url = f'https://{target}{url}'
+        else:
+            url = f'https://{target}/{url}'
     if str(target) not in str(url):
         pass
     elif url not in visited_urls and url not in urls_to_visit:
@@ -66,6 +77,7 @@ def crawl(target, url):
             }
     html = requests.get(url, headers=headers).text
     for url in get_linked_urls(target, url, html):
+        # Check for img files and txt files
         add_url_to_visit(target, url)
 
 # Main function

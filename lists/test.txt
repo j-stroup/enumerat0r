@@ -1,4 +1,3 @@
-www
 mail
 ftp
 localhost
@@ -10,3 +9,4 @@ cpanel
 m
 blog
 dev
+www
