@@ -43,20 +43,20 @@ def get_robots(target, url):
 
         # Loop through each line in robots.txt
         for line in r.text.splitlines():
+            if line.endswith('*'):
+                line = line.strip('*')
             if line.startswith('Allow'):
                 line = line.strip('Allow: ')
                 line = f'{url}{line}'
                 with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
-                    output.write(f'\n{line}')
+                    output.write(f'{line}\n')
                     output.close()
             elif line.startswith('Disallow'):
                 line = line.strip('Disallow: ')
                 line = f'{url}{line}'
                 with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
-                    output.write(f'\n{line}')
+                    output.write(f'{line}\n')
                     output.close()
-
-    print(f'{target} Finished')
 
 
 if __name__ == "__main__":

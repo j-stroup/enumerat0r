@@ -48,7 +48,7 @@ def scan_js(target, jsfile):
         file = f'{target}_treasure.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
-            f.write(f'\n{jsfile}   - {key[0]}: {key[1]}')
+            f.write(f'{jsfile}   - {key[0]}: {key[1]}\n')
             f.close()
         print(f"\nAPI KEYS ({jsfile})   - {key[0]}: {key[1]}\n")
 
@@ -57,7 +57,7 @@ def scan_js(target, jsfile):
         file = f'{target}_treasure.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
-            f.write(f'\n{jsfile}   - {cred[0]}: {cred[1]}')
+            f.write(f'{jsfile}   - {cred[0]}: {cred[1]}\n')
             f.close()
         print(f"\nCREDENTIALS ({jsfile})  - {cred[0]}: {cred[1]}\n")
 

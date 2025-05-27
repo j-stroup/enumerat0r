@@ -1,5 +1,4 @@
 -Stop from crawling 404
--Create separate log for 300, 400, & 500 errors
 -Log .txt .md
 -Don't crawl images
 -Better robots.txt handling

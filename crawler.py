@@ -30,7 +30,7 @@ def js_files(target, jsfile):
             file = f'{target}_js-files.txt'
             path = f'{target}/{file}'
             with open(path, 'a') as f:
-                f.write(f'\n{jsfile}')
+                f.write(f'{jsfile}\n')
                 f.close()
 
 # Parse HTML
@@ -75,6 +75,30 @@ def crawl(target, url):
     headers = {
             'User-Agent': agent
             }
+    try:
+        r = requests.get(url, headers=headers)
+    except:
+        print(f'Error: Could not get {url}/robots.txt')
+        r = 'error'
+    if str(r).startswith('<Response [3'):
+        file = f'{target}_200s.txt'
+        path = f'{target}/{file}'
+        with open(path, 'a') as f:
+            f.write(f'{url}   - {r}\n')
+            f.close()
+    elif str(r).startswith('<Response [4'):
+        file = f'{target}_400s.txt'
+        path = f'{target}/{file}'
+        with open(path, 'a') as f:
+            f.write(f'{url}   - {r}\n')
+            f.close()
+    elif str(r).startswith('<Response [5'):
+        file = f'{target}_500s.txt'
+        path = f'{target}/{file}'
+        with open(path, 'a') as f:
+            f.write(f'{url}   - {r}\n')
+            f.close()
+
     html = requests.get(url, headers=headers).text
     for url in get_linked_urls(target, url, html):
         # Check for img files and txt files
@@ -101,7 +125,7 @@ def run(target, target_url, file, speed):
             if not os.path.exists(path):
                 os.makedirs(path)
             with open(os.path.join(path, file), 'a') as f:
-                f.write(f'\n{url}')
+                f.write(f'{url}\n')
                 f.close()
             time.sleep(speed)
 

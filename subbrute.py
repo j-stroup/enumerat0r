@@ -49,7 +49,7 @@ def scan(target, speed, list_length):
                 sys.stdout.flush()
                 # Log subdomains
                 with open(os.path.join(path, output_file), 'a', encoding="utf-8") as output:
-                    output.write(f'\n{item}')
+                    output.write(f'{item}\n')
                     output.close()
             except:
                 error = 'Error | ' + item
