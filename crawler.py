@@ -18,6 +18,8 @@ urls_to_visit = []
 visited_urls = []
 known_jsfiles = []
 
+not_crawl = ['.jpeg', '.jpg', '.pdf', '.svg', '.png', '.gif', 'webp']
+
 # Log JavaScript file locations
 def js_files(target, jsfile):
     if jsfile not in known_jsfiles:
@@ -63,10 +65,26 @@ def add_url_to_visit(target, url):
     else:
         if url and url.startswith('/'):
             url = f'https://{target}{url}'
+        elif url and url.startswith('mailto'):
+            file = f'{target}_emails.txt'
+            path = f'{target}/{file}'
+            with open(path, 'a') as f:
+                f.write(f'{url.strip("mailto:")}\n')
+                f.close()
+        elif url and url.startswith('tel'):
+            pass
         else:
             url = f'https://{target}/{url}'
-    if str(target) not in str(url):
+    if str(target) not in str(url): # Keep it in scope
         pass
+    elif url.endswith(tuple(not_crawl)):
+        pass
+    elif url.endswith('.txt') or url.endswith('.md'):
+        file = f'{target}_txts.txt'
+        path = f'{target}/{file}'
+        with open(path, 'a') as f:
+            f.write(f'{url}\n')
+            f.close()
     elif url not in visited_urls and url not in urls_to_visit:
         urls_to_visit.append(url)
 
