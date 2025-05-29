@@ -9,17 +9,17 @@ def check_for_list(target):
     path = f'{target}/{target}_subs.txt'
     if not os.path.exists(path):
         target = ''
-        get_robots(target, url)
+        get_robots(target)
     else:
         with open(path, 'r') as f:
             Lines = [line for line in f.readlines() if line.strip()]
             for line in Lines:
                 if line != '':
                     url = line.strip()
-                    get_robots(target, url)
+                    get_robots(url)
 
-def get_robots(target, url):
-    print(f'Checking for {url}/robots.txt')
+def get_robots(target):
+    print(f'Checking for {target}/robots.txt')
 
     agent = random.choice(agents)
     headers = {

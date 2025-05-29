@@ -1,10 +1,7 @@
 -Log .txt .md (working?)
 -Better robots.txt handling
 -strip www. to stop duplicates
--Email logging? Check msnbc.com source
-  -?subject=Trump admin cuts to national park funding putting popular sites in crisis&body=https://www.msnbc.com/chris-jansing-reports/watch/trump-admin-cuts-to-national-park-funding-putting-popular-sites-in-crisis-240462917506
-  -hayes.brown@nbcuni.c
-    -strip() is issue - use replace()
+-Fix robots function - line 12, in check_for_list
 
 ------------------------------
 

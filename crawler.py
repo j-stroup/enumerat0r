@@ -17,6 +17,7 @@ logging.basicConfig(
 urls_to_visit = []
 visited_urls = []
 known_jsfiles = []
+emails = []
 
 not_crawl = ['.jpeg', '.jpg', '.pdf', '.svg', '.png', '.gif', 'webp']
 
@@ -68,18 +69,23 @@ def add_url_to_visit(target, url):
         elif url and url.startswith('mailto'):
             file = f'{target}_emails.txt'
             path = f'{target}/{file}'
-            with open(path, 'a') as f:
-                f.write(f'{url.strip("mailto:")}\n')
-                f.close()
+            url = url.replace('mailto:', '')
+            url = url.split('?')
+            email = url[0]
+            if email not in emails:
+                emails.append(email)
+                with open(path, 'a') as f:
+                    f.write(f'{email}\n')
+                    f.close()
         elif url and url.startswith('tel'):
             pass
         else:
             url = f'https://{target}/{url}'
     if str(target) not in str(url): # Keep it in scope
         pass
-    elif url.endswith(tuple(not_crawl)):
+    elif url and url.endswith(tuple(not_crawl)):
         pass
-    elif url.endswith('.txt') or url.endswith('.md'):
+    elif url and url.endswith('.txt') or url.endswith('.md'):
         file = f'{target}_txts.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
