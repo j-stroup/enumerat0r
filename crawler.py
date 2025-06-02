@@ -5,7 +5,7 @@ import random
 from bs4 import BeautifulSoup
 import time
 import os
-import js
+import js2
 
 from user_agents import agents
 
@@ -29,7 +29,7 @@ def js_files(target, jsfile):
         else:
             logging.info(f'FOUND: {jsfile}')
             known_jsfiles.append(jsfile)
-            js.scan_js(target, jsfile)
+            js2.js_scan(target, jsfile)
             file = f'{target}_js-files.txt'
             path = f'{target}/{file}'
             with open(path, 'a') as f:
@@ -105,7 +105,7 @@ def crawl(target, url):
         print(f'Error: Could not get {url}/robots.txt')
         r = 'error'
     if str(r).startswith('<Response [3'):
-        file = f'{target}_200s.txt'
+        file = f'{target}_300s.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
             f.write(f'{url}   - {r}\n')
@@ -166,3 +166,9 @@ if __name__ == '__main__':
     target_domain = 'https://' + target
     speed = input('How fast? S_low/M_edium/F_ast: ').lower()
     start(target, target_domain, speed)
+
+
+
+"""
+Finding and logging duplicate js files under subdomains
+"""
