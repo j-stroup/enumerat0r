@@ -63,13 +63,15 @@ def scan_js(target, jsfile):
 
 
 if __name__ == '__main__':
-    scan_js(js_content)
-
+    target = ''
+    jsfile = input('JavaScript file location: ')
+    scan_js(target, jsfile)
 
 
 
 
 """
+Discovering js that it is already scanning
 Are js files found in js files being scanned?
-Log none js file urls that are found in js files.
+Log non js file urls that are found in js files.
 """

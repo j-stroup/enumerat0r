@@ -1,7 +1,5 @@
 -Log .txt .md (working?)
--Better robots.txt handling
--strip www. to stop duplicates
--Fix robots function - line 12, in check_for_list
+-XML parser?
 
 ------------------------------
 

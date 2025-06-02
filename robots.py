@@ -5,21 +5,26 @@ import random
 from user_agents import agents
 
 
+robots_endpoints = []
+
+
 def check_for_list(target):
     path = f'{target}/{target}_subs.txt'
     if not os.path.exists(path):
-        target = ''
-        get_robots(target)
+        url = f'https://{target}'
+        get_robots(target, url)
     else:
+        url = f'https://{target}'
+        get_robots(target, url)
         with open(path, 'r') as f:
             Lines = [line for line in f.readlines() if line.strip()]
             for line in Lines:
                 if line != '':
                     url = line.strip()
-                    get_robots(url)
+                    get_robots(target, url)
 
-def get_robots(target):
-    print(f'Checking for {target}/robots.txt')
+def get_robots(target, url):
+    print(f'Checking for {url}/robots.txt')
 
     agent = random.choice(agents)
     headers = {
@@ -43,31 +48,25 @@ def get_robots(target):
 
         # Loop through each line in robots.txt
         for line in r.text.splitlines():
-            if line.endswith('*'):
-                line = line.strip('*')
-            if line.startswith('Allow'):
-                line = line.strip('Allow: ')
-                line = f'{url}{line}'
-                with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
-                    output.write(f'{line}\n')
-                    output.close()
-            elif line.startswith('Disallow'):
-                line = line.strip('Disallow: ')
-                line = f'{url}{line}'
-                with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
-                    output.write(f'{line}\n')
-                    output.close()
+            if line not in robots_endpoints:
+                robots_endpoints.append(line)
+                if line.endswith('*'):
+                    line = line.strip('*')
+                if line.startswith('Allow'):
+                    line = line.replace('Allow: ', '')
+                    line = f'{url}{line}'
+                    with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
+                        output.write(f'{line}\n')
+                        output.close()
+                elif line.startswith('Disallow'):
+                    line = line.replace('Disallow: ', '')
+                    line = f'{url}{line}'
+                    with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
+                        output.write(f'{line}\n')
+                        output.close()
 
 
 if __name__ == "__main__":
     target = input('Target domain: https://')
     url = f'https://{target}'
     get_robots(target, url)
-
-
-
-
-"""
-Check add formatting for robots urls like https://
-Remove *
-"""
