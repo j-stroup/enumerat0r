@@ -83,8 +83,10 @@ def add_url_to_visit(target, url):
             url = f'https://{target}/{url}'
     if str(target) not in str(url): # Keep it in scope
         pass
-    elif url and url.endswith(tuple(not_crawl)):
+        '''
+    elif str(url) and str(url.endswith(tuple(not_crawl))): # ******FIX THIS!******
         pass
+        '''
     elif url and url.endswith('.txt') or url.endswith('.md'):
         file = f'{target}_txts.txt'
         path = f'{target}/{file}'

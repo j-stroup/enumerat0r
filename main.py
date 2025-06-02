@@ -3,6 +3,8 @@ import subbrute
 import crawler
 import os
 
+import cms_scan
+
 
 master_list = []
 
@@ -32,6 +34,8 @@ def main():
         for line in Lines:
             if line != '':
                 target_url = line.strip()
+                # Fingerprint CMS
+                cms_scan.detect_cms(target_url, speed)
                 # Start crawler
                 crawler.start(target, target_url, speed)
 
