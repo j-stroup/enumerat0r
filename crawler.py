@@ -19,7 +19,7 @@ visited_urls = []
 known_jsfiles = []
 emails = []
 
-not_crawl = ['.jpeg', '.jpg', '.pdf', '.svg', '.png', '.gif', 'webp']
+not_crawl = ['jpeg', '.jpg', '.pdf', '.svg', '.png', '.gif', 'webp', 'tiff', '.mp3', '.mp4']
 
 # Log JavaScript file locations
 def js_files(target, jsfile):
@@ -83,10 +83,8 @@ def add_url_to_visit(target, url):
             url = f'https://{target}/{url}'
     if str(target) not in str(url): # Keep it in scope
         pass
-        '''
-    elif str(url) and str(url.endswith(tuple(not_crawl))): # ******FIX THIS!******
+    elif str(url[-4:]) in not_crawl: # Discard images and videos
         pass
-        '''
     elif url and url.endswith('.txt') or url.endswith('.md'):
         file = f'{target}_txts.txt'
         path = f'{target}/{file}'
@@ -104,7 +102,7 @@ def crawl(target, url):
     try:
         r = requests.get(url, headers=headers)
     except:
-        print(f'Error: Could not get {url}/robots.txt')
+        print(f'Error: Could not get {url}')
         r = 'error'
     if str(r).startswith('<Response [3'):
         file = f'{target}_300s.txt'
@@ -127,7 +125,6 @@ def crawl(target, url):
 
     html = requests.get(url, headers=headers).text
     for url in get_linked_urls(target, url, html):
-        # Check for img files and txt files
         add_url_to_visit(target, url)
 
 # Main function

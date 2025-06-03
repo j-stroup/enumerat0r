@@ -59,7 +59,7 @@ def sanitize_filename(jsfile):
 
 def log_findings(target, results, jsfile):
     filename = f"{target}/{target}_js-treasure.txt"
-    with open(filename, 'a', encoding='utf-8') as f:
+    with open(filename, 'a') as f:
         f.write(f"\n\n**********************************************************************************\nURL: {jsfile}\nGenerated: {datetime.now()}\n\n")
         if not results:
             print("✅ No sensitive content found.\n")

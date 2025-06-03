@@ -59,12 +59,24 @@ def detect_cms(target_url, speed):
         if 'squarespace.com' in content or 'static.squarespace.com' in content:
             return 'Squarespace'
 
+        # Check for endpoints for more accuate results
+
         return 'Unknown or Custom CMS'
 
     except requests.RequestException as e:
         print(f"Error accessing {target_url}: {e}")
         return 'Error'
     time.sleep(random.choice(speed))
+    # Return results
+
+def fingerprint(target, target_url, speed):
+    cms = detect_cms(target_url, speed)
+    file = f'{target}.txt'
+    path = f'{target}/{file}'
+    with open(path, 'a') as f:
+        f.write(f'{target_url} is using: {cms}')
+        f.close()
+    print(f"{target_url} is using: {cms}")
 
 
 if __name__ == "__main__":
