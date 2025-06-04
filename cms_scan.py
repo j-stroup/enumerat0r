@@ -74,9 +74,9 @@ def fingerprint(target, target_url, speed):
     file = f'{target}.txt'
     path = f'{target}/{file}'
     with open(path, 'a') as f:
-        f.write(f'{target_url} is using: {cms}')
+        f.write(f'{target_url} is using: {cms}\n')
         f.close()
-    print(f"{target_url} is using: {cms}")
+    print(f"\n{target_url} is using: {cms}\n")
 
 
 if __name__ == "__main__":

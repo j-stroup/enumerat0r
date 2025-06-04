@@ -85,7 +85,7 @@ def add_url_to_visit(target, url):
         pass
     elif str(url[-4:]) in not_crawl: # Discard images and videos
         pass
-    elif url and url.endswith('.txt') or url.endswith('.md'):
+    elif str(url[-4:]) == '.txt' or str(url[-3:]) == '.md':
         file = f'{target}_txts.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:

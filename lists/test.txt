@@ -1,5 +1,4 @@
-mail
-ftp
+shop
 localhost
 webmail
 smtp

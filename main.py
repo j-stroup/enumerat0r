@@ -37,6 +37,9 @@ def main():
                 # Fingerprint CMS
                 cms_scan.fingerprint(target, target_url, speed)
                 # Start crawler
+        for line in Lines:
+            if line != '':
+                target_url = line.strip()
                 crawler.start(target, target_url, speed)
 
 

@@ -1,9 +1,8 @@
--Why is CMS scan not starting?
--Is CMS fingerprinting working on full app?
 -Add logging for CMS and other details
 -Log .txt .md (working?)
 -XML parser?
 -Change print() output of sub fuzzer
+-Double check subs 200 not redirect
 
 ------------------------------
 

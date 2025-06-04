@@ -60,10 +60,11 @@ def get_robots(target, url):
                         output.close()
                 elif line.startswith('Disallow'):
                     line = line.replace('Disallow: ', '')
-                    line = f'{url}{line}'
-                    with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
-                        output.write(f'{line}\n')
-                        output.close()
+                    if line.strip() != '/':
+                        line = f'{url}{line}'
+                        with open(os.path.join(target, output_file), 'a', encoding="utf-8") as output:
+                            output.write(f'{line}\n')
+                            output.close()
 
 
 if __name__ == "__main__":
