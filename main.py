@@ -4,6 +4,7 @@ import crawler
 import os
 
 import cms_scan
+import parse_endpoints as end
 
 
 master_list = []
@@ -41,6 +42,9 @@ def main():
             if line != '':
                 target_url = line.strip()
                 crawler.start(target, target_url, speed)
+
+    # Test URLs with parameters for vulnerabilities
+    end.start(target, speed)
 
 
 if __name__ == "__main__":

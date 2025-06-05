@@ -3,7 +3,7 @@
 -XML parser?
 -Change print() output of sub fuzzer
 -Double check subs 200 not redirect
-
+-Are sub urls being recorded with sub?
 ------------------------------
 
 -Start menu for single tool options
