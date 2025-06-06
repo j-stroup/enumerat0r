@@ -8,6 +8,7 @@ import os
 import js2
 
 from user_agents import agents
+import parse_endpoints
 
 
 logging.basicConfig(
@@ -59,13 +60,13 @@ def get_linked_urls(target, url, html):
             js_files(target, jsfile)
 
 # Add discovered url to list if not already crawled
-def add_url_to_visit(target, url):
+def add_url_to_visit(target, url, speed):
     # Check for email or phone links
     if url and url.startswith('http'):
         pass
     else:
         if url and url.startswith('/'):
-            url = f'https://{target}{url}'
+            url = f'https://{target}{url}' # This is where the issue is <---------------- Need to add subdomain handling
         elif url and url.startswith('mailto'):
             file = f'{target}_emails.txt'
             path = f'{target}/{file}'
@@ -93,8 +94,13 @@ def add_url_to_visit(target, url):
             f.close()
     elif url not in visited_urls and url not in urls_to_visit:
         urls_to_visit.append(url)
+'''
+This is where the endpoint parser should start but the module needs reworked to handle
+testing individual URLs instead of looping through the endpoints txt file.
+        parse_endpoints.start(target, url, speed)
+'''
 
-def crawl(target, url):
+def crawl(target, url, speed):
     agent = random.choice(agents)
     headers = {
             'User-Agent': agent
@@ -125,7 +131,7 @@ def crawl(target, url):
 
     html = requests.get(url, headers=headers).text
     for url in get_linked_urls(target, url, html):
-        add_url_to_visit(target, url)
+        add_url_to_visit(target, url, speed)
 
 # Main function
 def run(target, target_url, file, speed):
@@ -139,7 +145,7 @@ def run(target, target_url, file, speed):
         url = urls_to_visit.pop(0)
         logging.info(f'Crawling: {url}')
         try:
-            crawl(target, url)
+            crawl(target, url, speed)
         except Exception:
             logging.exception(f'Failed to crawl: {url}')
         finally:

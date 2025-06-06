@@ -44,7 +44,7 @@ def main():
                 crawler.start(target, target_url, speed)
 
     # Test URLs with parameters for vulnerabilities
-    end.start(target, speed)
+    #end.start(target, speed)
 
 
 if __name__ == "__main__":
