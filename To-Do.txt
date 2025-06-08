@@ -4,7 +4,6 @@
 -Change print() output of sub fuzzer
 -Double check subs 200 not redirect
 -Are crawler being recorded with sub?
--Can endpoints be checked mid crawl?
 ------------------------------
 
 -Start menu for single tool options
