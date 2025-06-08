@@ -5,7 +5,7 @@ import random
 from bs4 import BeautifulSoup
 import time
 import os
-import js2
+import js
 
 from user_agents import agents
 import parse_endpoints
@@ -30,7 +30,7 @@ def js_files(target, jsfile):
         else:
             logging.info(f'FOUND: {jsfile}')
             known_jsfiles.append(jsfile)
-            js2.js_scan(target, jsfile)
+            js.js_scan(target, jsfile)
             file = f'{target}_js-files.txt'
             path = f'{target}/{file}'
             with open(path, 'a') as f:
@@ -86,7 +86,7 @@ def add_url_to_visit(target, url, speed):
         pass
     elif str(url[-4:]) in not_crawl: # Discard images and videos
         pass
-    elif str(url[-4:]) == '.txt' or str(url[-3:]) == '.md':
+    elif str(url[-4:]) == '.txt' or str(url[-3:]) == '.md': # Log any .txt or .md files
         file = f'{target}_txts.txt'
         path = f'{target}/{file}'
         with open(path, 'a') as f:
@@ -94,11 +94,6 @@ def add_url_to_visit(target, url, speed):
             f.close()
     elif url not in visited_urls and url not in urls_to_visit:
         urls_to_visit.append(url)
-'''
-This is where the endpoint parser should start but the module needs reworked to handle
-testing individual URLs instead of looping through the endpoints txt file.
-        parse_endpoints.start(target, url, speed)
-'''
 
 def crawl(target, url, speed):
     agent = random.choice(agents)
@@ -129,6 +124,8 @@ def crawl(target, url, speed):
             f.write(f'{url}   - {r}\n')
             f.close()
 
+    parse_endpoints.check_params(target, url)
+
     html = requests.get(url, headers=headers).text
     for url in get_linked_urls(target, url, html):
         add_url_to_visit(target, url, speed)
@@ -143,7 +140,7 @@ def run(target, target_url, file, speed):
         speed = 0
     while urls_to_visit:
         url = urls_to_visit.pop(0)
-        logging.info(f'Crawling: {url}')
+        logging.info(f'\nCrawling: {url}')
         try:
             crawl(target, url, speed)
         except Exception:

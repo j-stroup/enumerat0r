@@ -30,22 +30,22 @@ def main():
 
 
     # Combine lists and write to new file
-    with open(subs, 'r') as f:
-        Lines = [line for line in f.readlines() if line.strip()]
-        for line in Lines:
-            if line != '':
-                target_url = line.strip()
-                # Fingerprint CMS
-                cms_scan.fingerprint(target, target_url, speed)
-                # Start crawler
-        for line in Lines:
-            if line != '':
-                target_url = line.strip()
-                crawler.start(target, target_url, speed)
-
-    # Test URLs with parameters for vulnerabilities
-    #end.start(target, speed)
-
+    try:
+        with open(subs, 'r') as f:
+            Lines = [line for line in f.readlines() if line.strip()]
+            for line in Lines:
+                if line != '':
+                    target_url = line.strip()
+                    # Fingerprint CMS
+                    cms_scan.fingerprint(target, target_url, speed)
+                    # Start crawler
+            for line in Lines:
+                if line != '':
+                    target_url = line.strip()
+                    crawler.start(target, target_url, speed)
+    except Exception:
+        print('No subdomains found')
+        crawler.start(target, target, speed)
 
 if __name__ == "__main__":
     main()
