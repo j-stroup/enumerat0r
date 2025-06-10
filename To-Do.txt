@@ -1,9 +1,8 @@
 -Add logging for CMS and other details
 -Log .txt .md (working?)
 -XML parser?
--Change print() output of sub fuzzer
--Double check subs 200 not redirect
 -Are crawler being recorded with sub?
+-Try https: Exception http:
 ------------------------------
 
 -Start menu for single tool options

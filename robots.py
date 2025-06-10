@@ -21,6 +21,8 @@ def check_for_list(target):
             for line in Lines:
                 if line != '':
                     url = line.strip()
+                    if url.endswith('200'):
+                        url = url.replace(' | 200', '')                    
                     get_robots(target, url)
 
 def get_robots(target, url):

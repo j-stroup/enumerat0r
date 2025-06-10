@@ -43,22 +43,16 @@ def scan(target, speed, list_length):
                 r = requests.get(item, headers=headers)
                 response = str(r)
                 response = response.strip('<Response []>')
-                item_response = response + ' | ' + item
-                sys.stdout.write('                                                                  \r')
-                sys.stdout.write(item_response + '\r')
-                sys.stdout.flush()
+                item_response = item + ' | ' + response
+                print(item_response)
                 # Log subdomains
                 with open(os.path.join(path, output_file), 'a', encoding="utf-8") as output:
-                    output.write(f'{item}\n')
+                    output.write(f'{item_response}\n')
                     output.close()
             except:
                 error = 'Error | ' + item
-                sys.stdout.write('                                                                  \r')
-                sys.stdout.write(error + '\r')
-                sys.stdout.flush()
-        sys.stdout.write('                                                                          \r')
-        sys.stdout.write('Complete')
-        sys.stdout.flush()
+                print(error)
+        print('Complete')
         print('\n')
     print(f'Results saved in: {output_file}')
     return output_file

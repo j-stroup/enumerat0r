@@ -36,13 +36,17 @@ def main():
             for line in Lines:
                 if line != '':
                     target_url = line.strip()
-                    # Fingerprint CMS
-                    cms_scan.fingerprint(target, target_url, speed)
+                    if target_url.endswith('200'):
+                        target_url = target_url.replace(' | 200', '')
+                        # Fingerprint CMS
+                        cms_scan.fingerprint(target, target_url, speed)
                     # Start crawler
             for line in Lines:
                 if line != '':
                     target_url = line.strip()
-                    crawler.start(target, target_url, speed)
+                    if target_url.endswith('200'):
+                        target_url = target_url.replace(' | 200', '')
+                        crawler.start(target, target_url, speed)
     except Exception:
         print('No subdomains found')
         crawler.start(target, target, speed)
