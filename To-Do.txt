@@ -1,8 +1,11 @@
+-Custom headers option
 -Add logging for CMS and other details
 -Log .txt .md (working?)
 -XML parser?
 -Are crawler being recorded with sub?
--Try https: Exception http:
+-Log non 404 subs
+-Fix duplication of https and http positives
+  -Drop 200 test below Exception?
 ------------------------------
 
 -Start menu for single tool options
