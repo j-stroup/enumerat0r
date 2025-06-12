@@ -1,13 +1,15 @@
+-Test for open directories
 -Custom headers option
--Add logging for CMS and other details
--Log .txt .md (working?)
--XML parser?
+-XML parser - sitemap scan
 -Are crawler being recorded with sub?
--Log non 404 subs
--Fix duplication of https and http positives
-  -Drop 200 test below Exception?
-------------------------------
-
 -Start menu for single tool options
--Wordpress fingerprinting
-  -Check for and scan common wordpress endpoints
+-Scan CMS for login pages
+
+--------------------------------------------------------
+
+*Ideas for implementing single tool options from start menu*
+
+Store options in a list
+main.py main() checks list before running tool
+Tools triggered in individual functions will need reorganized
+Full scan option

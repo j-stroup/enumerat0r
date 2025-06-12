@@ -43,7 +43,7 @@ def scan(target, speed, list_length):
                 r = requests.get(item, headers=headers)
                 response = str(r)
                 response = response.strip('<Response []>')
-                if response != '200' or response != '404':
+                if response != '200':
                     try:
                         item_http = item.replace('https:', 'http:')
                         r = requests.get(item_http, headers=headers)
@@ -56,6 +56,7 @@ def scan(target, speed, list_length):
                             item_response = item_http + ' | ' + response
                             output.write(f'{item_response}\n')
                             output.close()
+                print(item_response)
                     except:
                         error = 'Error | ' + item_http
                         print(error)

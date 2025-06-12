@@ -37,26 +37,32 @@ def detect_cms(target_url, speed):
             return 'WordPress'
         wp_login_check = requests.get(target_url.rstrip('/') + '/wp-login.php', headers=headers, timeout=5)
         if wp_login_check.status_code == 200 and 'wordpress' in wp_login_check.text.lower():
+            # Test for common login endpoints here
             return 'WordPress'
 
         # Joomla
         if 'content="joomla!' in content or 'com_content' in content:
+            # Test for common login endpoints here
             return 'Joomla'
 
         # Drupal
         if 'sites/all/' in content or 'drupal-settings-json' in content:
+            # Test for common login endpoints here
             return 'Drupal'
 
         # Shopify
         if 'cdn.shopify.com' in content or 'x-shopify-stage' in response.headers:
+            # Test for common login endpoints here
             return 'Shopify'
 
         # Wix
         if 'wix.com' in content or 'X-Wix-Request-Id' in response.headers:
+            # Test for common login endpoints here
             return 'Wix'
 
         # Squarespace
         if 'squarespace.com' in content or 'static.squarespace.com' in content:
+            # Test for common login endpoints here
             return 'Squarespace'
 
         # Check for endpoints for more accuate results
