@@ -42,16 +42,22 @@ def main():
                         target_url = target_url.replace(' | 200', '')
                         # Fingerprint CMS
                         cms_scan.fingerprint(target, target_url, speed)
-            # Start crawler
+            # Add subdomain to crawl list
             for line in Lines:
                 if line != '':
                     target_url = line.strip()
                     if target_url.endswith('200'):
                         target_url = target_url.replace(' | 200', '')
-                        crawler.start(target, target_url, speed)
+                        crawler.add_url_to_visit(target, target_url, speed)
+        crawler.start(target, target_url, speed)
     except Exception:
         print('No subdomains found')
         crawler.start(target, target, speed)
 
 if __name__ == "__main__":
     main()
+
+
+'''
+Simplify for line loops into one
+'''

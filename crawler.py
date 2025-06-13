@@ -165,12 +165,6 @@ def start(target, target_url, speed):
 if __name__ == '__main__':
     global target_domain
     target = input('Domain: https://')
-    target_domain = 'https://' + target
+    target_domain = 'http://' + target
     speed = input('How fast? S_low/M_edium/F_ast: ').lower()
     start(target, target_domain, speed)
-
-
-
-"""
-Finding and logging duplicate js files under subdomains
-"""

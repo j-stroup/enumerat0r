@@ -13,3 +13,7 @@ Store options in a list
 main.py main() checks list before running tool
 Tools triggered in individual functions will need reorganized
 Full scan option
+
+
+
+In the middle of fixing subdomain url crawling

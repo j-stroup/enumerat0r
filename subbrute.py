@@ -56,7 +56,6 @@ def scan(target, speed, list_length):
                             item_response = item_http + ' | ' + response
                             output.write(f'{item_response}\n')
                             output.close()
-                print(item_response)
                     except:
                         error = 'Error | ' + item_http
                         print(error)
