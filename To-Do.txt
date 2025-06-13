@@ -4,6 +4,7 @@
 -Are crawler being recorded with sub?
 -Start menu for single tool options
 -Scan CMS for login pages
+-Still throws error looking for sub file
 
 --------------------------------------------------------
 

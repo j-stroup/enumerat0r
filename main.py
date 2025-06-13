@@ -2,6 +2,7 @@ import robots
 import subbrute
 import crawler
 import os
+import os.path
 
 import cms_scan
 import parse_endpoints as end
@@ -33,23 +34,24 @@ def main():
     bots = f'{target}/{target}_robots.txt'
 
     try:
-        with open(subs, 'r') as f:
-            Lines = [line for line in f.readlines() if line.strip()]
-            for line in Lines:
-                if line != '':
-                    target_url = line.strip()
-                    if target_url.endswith('200'):
-                        target_url = target_url.replace(' | 200', '')
-                        # Fingerprint CMS
-                        cms_scan.fingerprint(target, target_url, speed)
-            # Add subdomain to crawl list
-            for line in Lines:
-                if line != '':
-                    target_url = line.strip()
-                    if target_url.endswith('200'):
-                        target_url = target_url.replace(' | 200', '')
-                        crawler.add_url_to_visit(target, target_url, speed)
-        crawler.start(target, target_url, speed)
+        if os.path.isfile(subs):
+            with open(subs, 'r') as f:
+                Lines = [line for line in f.readlines() if line.strip()]
+                for line in Lines:
+                    if line != '':
+                        target_url = line.strip()
+                        if target_url.endswith('200'):
+                            target_url = target_url.replace(' | 200', '')
+                            # Fingerprint CMS
+                            cms_scan.fingerprint(target, target_url, speed)
+                # Add subdomain to crawl list
+                for line in Lines:
+                    if line != '':
+                        target_url = line.strip()
+                        if target_url.endswith('200'):
+                            target_url = target_url.replace(' | 200', '')
+                            crawler.add_url_to_visit(target, target_url, speed)
+            crawler.start(target, target_url, speed)
     except Exception:
         print('No subdomains found')
         crawler.start(target, target, speed)
